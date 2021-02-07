@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // import { fasnowflake } from '@fortawesome/free-solid-svg-icons'
 import { faSnowflake } from '@fortawesome/free-regular-svg-icons'
 
-import SnowSvg from "./snow.svg"
+import SnowSvg from "./snow_b.svg"
 
 import useImage from 'use-image';
 
@@ -24,12 +24,20 @@ const LionImage = (props) => {
     // save animation instance to stop it on unmount
    console.log(rect.current);
    rect.current.to({
-    scaleX: 2,
-    scaleY: 2,
-    x: props.x+400,
-    y: props.y-350,
+    scaleX: 4,
+    scaleY: 4,
+    x: props.x+350,
+    y: props.y-330,
     // visible: false,
-    duration: 2,
+    duration: 2-Math.random()*1.8,
+    onFinish: () => {
+      rect.current.to({
+        // scaleX: 1,
+        // scaleY: 1,
+        // visible: false,
+        opacity: 0,
+      });
+    },
   });
   }, []);
 
@@ -71,7 +79,8 @@ class App extends React.Component {
 
 
   state = {
-    stageWidth: 1000
+    stageWidth: 1000,
+    stageHeight: 700
   };
   componentDidMount() {
     this.checkSize();
@@ -87,8 +96,10 @@ class App extends React.Component {
 
   checkSize = () => {
     const width = this.container.offsetWidth;
+    const Height = this.container.offsetHeight;
     this.setState({
-      stageWidth: width
+      stageWidth: width,
+      stageHeight: Height
     });
   };
 
@@ -98,7 +109,7 @@ class App extends React.Component {
 
   eee = [this.qq(0,400,'A'),this.qq(400,0,'b')];
 
-  eee3 = () => {
+  eee3 = (props) => {
      //假設有個待辦事項的陣列
      let arrLists = ['打文章','寫程式','耍廢']
         
@@ -111,7 +122,7 @@ class App extends React.Component {
          for(let j=300;j<=500;j=j+40)
          {
 
-            lists.push(<LionImage key={`D${i}${j}`} x={i} y={j}></LionImage>)
+            lists.push(<LionImage {...props} key={`D${i}${j}`} x={i} y={j}></LionImage>)
          }
      }
 
@@ -124,12 +135,32 @@ class App extends React.Component {
 
   }
 
-  render() {
-    console.log(this.state.stageWidth);
+  render() {    
+
+    var monsterWidth  = this.state.stageWidth/2.5;
+    var monsterHeight = this.state.stageHeight/2.5;
+    var monster1X = monsterWidth*1.5;
+    var monster1Y = monsterHeight/5;
+    var monster2X = monsterWidth/4;
+    var monster2Y = monsterHeight*1.1;
+
+    console.log(monsterWidth);
+    console.log(monsterHeight);
+
+    if( monsterWidth>monsterHeight )
+      monsterHeight = monsterWidth;
+    else
+       monsterWidth = monsterHeight;
+   
+
+
     return (
       <div
         style={{
-          width: "100%",
+          width: "100vmin",
+          maxWidth: "1000px",
+          maxHeight: "70vh",
+          height: "100vmin",
           border: "1px solid grey"
         }}
         ref={(node) => {
@@ -137,8 +168,7 @@ class App extends React.Component {
         }}
       >
      {/* <img src={SnowSvg}></img> */}
-      <Stage width={this.state.stageWidth} height={window.innerHeight} scaleX={this.state.stageWidth/622}
-      scaleY={this.state.stageWidth/622}>
+      <Stage width={this.state.stageWidth} height={this.state.stageHeight} scaleX={this.state.stageWidth/540} scaleY={this.state.stageWidth/540}>
         <Layer>
           {/* <GIF  src="https://konvajs.org/assets/yoda.gif" /> */}
        
@@ -153,20 +183,22 @@ class App extends React.Component {
             <img
               style={{
                 position: 'absolute',
-                top: 400*this.state.stageWidth/622,
-                left: 10,
-                // width: '200px',
-                width: `${300*this.state.stageWidth/622}px`
+                top: monster1Y,
+                left: monster1X,
+                width: monsterWidth,
+                height: monsterHeight
               }}
               src={QQ}
             />
-             <img
+          </Portal>
+          <Portal>
+            <img
               style={{
                 position: 'absolute',
-                top: 10,
-                left: 400*this.state.stageWidth/622,
-                // width: '200px',
-                width: `${300*this.state.stageWidth/622}px`
+                top: monster2Y,
+                left: monster2X,
+                width: monsterWidth,
+                height: monsterHeight
               }}
               src={QQ}
             />
