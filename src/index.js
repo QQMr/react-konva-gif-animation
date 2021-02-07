@@ -129,7 +129,7 @@ class App extends React.Component {
     return (
       <div
         style={{
-          width: "80%",
+          width: "100%",
           border: "1px solid grey"
         }}
         ref={(node) => {
@@ -145,12 +145,32 @@ class App extends React.Component {
           {/* <GIF x={500} y={0} src={QQ} /> */}
           {/* <Image image={SnowSvg}></Image> */}
          
-          {this.eee.map((val) => (val))
-          
-          }
+          {/* {this.eee.map((val) => (val))
+        } */}
 
           <MyRect></MyRect>
-
+          <Portal>
+            <img
+              style={{
+                position: 'absolute',
+                top: 400*this.state.stageWidth/622,
+                left: 10,
+                // width: '200px',
+                width: `${300*this.state.stageWidth/622}px`
+              }}
+              src={QQ}
+            />
+             <img
+              style={{
+                position: 'absolute',
+                top: 10,
+                left: 400*this.state.stageWidth/622,
+                // width: '200px',
+                width: `${300*this.state.stageWidth/622}px`
+              }}
+              src={QQ}
+            />
+          </Portal>
           {/* <LionImage x={0} y={400} ></LionImage>
           <LionImage x={20} y={360} ></LionImage>
           <LionImage x={0} y={370} ></LionImage>
@@ -158,6 +178,7 @@ class App extends React.Component {
           <LionImage x={0} y={400} ></LionImage> */}
           
           {this.eee3()}
+          
         </Layer>
       </Stage>
       </div>
