@@ -137,77 +137,72 @@ class App extends React.Component {
 
   render() {    
 
-    var monsterWidth  = this.state.stageWidth/2.5;
-    var monsterHeight = this.state.stageHeight/2.5;
-    var monster1X = monsterWidth*1.5;
-    var monster1Y = monsterHeight/5;
-    var monster2X = monsterWidth/4;
-    var monster2Y = monsterHeight*1.1;
+    // var monsterWidth  = this.state.stageWidth/2.5;
+    // var monsterHeight = this.state.stageHeight/2.5;
+    // var monster1X = monsterWidth*1.5;
+    // var monster1Y = monsterHeight/5;
+    // var monster2X = monsterWidth/4;
+    // var monster2Y = monsterHeight*1.1;
 
-    console.log(monsterWidth);
-    console.log(monsterHeight);
 
-    if( monsterWidth>monsterHeight )
-      monsterHeight = monsterWidth;
-    else
-       monsterWidth = monsterHeight;
+
+    // if( monsterWidth>monsterHeight )
+    //   monsterHeight = monsterWidth;
+    // else
+    //    monsterWidth = monsterHeight;
    
+    const panelWidth  = this.state.stageWidth;
+    const panelHeight = this.state.stageHeight;
 
+    const monsterWidth = panelWidth/2;
+    const enemyPokePosition = {"x":(panelWidth-monsterWidth-20),"y":(0+20)};
+    const ourPokePosition   = {"x":(0+20)         ,"y":(panelHeight-monsterWidth+monsterWidth*2/8)};
+
+  
 
     return (
       <div
         style={{
-          width: "100vmin",
-          maxWidth: "1000px",
-          maxHeight: "70vh",
-          height: "100vmin",
-          border: "1px solid grey"
+          // width: ration,
+          // // maxWidth: "1000px",
+          // // maxHeight: "70vh",
+          // height: ration,
+          // boxSizing: "border-box",
+          width: "100%",
+          height: "100%",
+          // paddingTop: "100%",
+          border: "10px solid grey"
         }}
         ref={(node) => {
           this.container = node;
         }}
       >
-     {/* <img src={SnowSvg}></img> */}
-      <Stage width={this.state.stageWidth} height={this.state.stageHeight} scaleX={this.state.stageWidth/540} scaleY={this.state.stageWidth/540}>
+      <Stage width={panelWidth} height={panelHeight} scaleX={panelWidth/540} scaleY={panelHeight/540}>
         <Layer>
-          {/* <GIF  src="https://konvajs.org/assets/yoda.gif" /> */}
-       
-          {/* <GIF x={500} y={0} src={QQ} /> */}
-          {/* <Image image={SnowSvg}></Image> */}
-         
-          {/* {this.eee.map((val) => (val))
-        } */}
 
           <MyRect></MyRect>
           <Portal>
             <img
               style={{
                 position: 'absolute',
-                top: monster1Y,
-                left: monster1X,
+                top: enemyPokePosition.y,
+                left: enemyPokePosition.x,
                 width: monsterWidth,
-                height: monsterHeight
+                // height: monsterHeight
               }}
               src={QQ}
             />
-          </Portal>
-          <Portal>
             <img
               style={{
                 position: 'absolute',
-                top: monster2Y,
-                left: monster2X,
+                top: ourPokePosition.y,
+                left: ourPokePosition.x,
                 width: monsterWidth,
-                height: monsterHeight
+                // height: monsterHeight
               }}
               src={QQ}
             />
           </Portal>
-          {/* <LionImage x={0} y={400} ></LionImage>
-          <LionImage x={20} y={360} ></LionImage>
-          <LionImage x={0} y={370} ></LionImage>
-          <LionImage x={0} y={400} ></LionImage>
-          <LionImage x={0} y={400} ></LionImage> */}
           
           {this.eee3()}
           
