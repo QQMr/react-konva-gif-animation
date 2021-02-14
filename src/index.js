@@ -1,4 +1,4 @@
-import React,{useEffect, useRef} from "react";
+import React,{Component, useEffect, useRef} from "react";
 import { render } from "react-dom";
 import { Stage, Layer, Image,Rect } from "react-konva";
 import QQ from "./abomasnow.gif";
@@ -14,7 +14,11 @@ import SnowSvg from "./snow_b.svg"
 
 import useImage from 'use-image';
 
+import BattleMainPanel from "./components/BattleMainPanel"
+
 const Element = <FontAwesomeIcon icon={faSnowflake} />
+
+
 
 const LionImage = (props) => {
 
@@ -74,6 +78,29 @@ const GIF = ({ src,x,y }) => {
   return <Image x={x} y={y}             scaleX={1.5}
   scaleY={1.5} image={canvas}  ref={imageRef} />;
 };
+
+const MainApp = (props) => {
+
+  const enemyInf = { enemyImg: QQ ,enemyName:"FF",enemyCurrentHP:100,enemyTotalHP:100};
+  const ourInf   = { ourImg: QQ ,ourName:"QQ",ourCurrentHP:70,ourTotalHP:100};
+
+  return (
+    <div  style={{
+      width: "100vmin",
+      // // maxWidth: "1000px",
+      // // maxHeight: "70vh",
+      height: "100vmin",
+      // boxSizing: "border-box",
+      // paddingTop: "100%",
+      border: "0px solid grey"
+    }}>
+
+      <BattleMainPanel {...enemyInf} {...ourInf}/>
+    </div>
+  )
+
+}
+
 
 class App extends React.Component {
 
@@ -171,7 +198,7 @@ class App extends React.Component {
           width: "100%",
           height: "100%",
           // paddingTop: "100%",
-          border: "10px solid grey"
+          border: "0px solid grey"
         }}
         ref={(node) => {
           this.container = node;
@@ -300,4 +327,4 @@ class Portal extends React.Component {
   }
 }
 
-render(<App />, document.getElementById("root"));
+render(<MainApp />, document.getElementById("root"));
