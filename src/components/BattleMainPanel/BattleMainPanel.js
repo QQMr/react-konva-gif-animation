@@ -1,5 +1,6 @@
 import React from "react";
 import { Stage, Layer, Rect,Image } from "react-konva";
+import Konva from 'konva';
 import MosterInformation from "./MosterInformation.js"
 // gifler will be imported into global window object
 // gifler will be imported into global window object
@@ -39,6 +40,7 @@ class MyRect extends React.Component {
           opacity: 0,
         });
         console.log("Finished");
+        this.props.removeEvent();
       },
     });
 
@@ -121,7 +123,43 @@ class BattleMainPanel extends React.Component {
     });
   };
 
- 
+  clickAddAttack = () =>{
+
+    if(this.state.ourAttack != null)
+      return;
+
+    console.log("oooooooo");
+    this.setState({
+      ourAttack: () =>  <MyRect startX={100 } startY={100} removeEvent={  ()=>{this.setState({ ourAttack:null }) }  }  />,
+    });
+  }
+
+  OurAttack = (props) => {
+    // //假設有個待辦事項的陣列
+    // let arrLists = ['打文章','寫程式','耍廢']
+       
+    // //先建立一個空陣列
+    // let lists = [];
+    
+    // //用迴圈將代辦事項的內容一個個放進空陣列中
+    // for(let i=0;i<=150;i=i+40){
+    //     //記得在JSX中使用JS變數要用花括號包著
+    //     for(let j=300;j<=500;j=j+40)
+    //     {
+
+    //        lists.push(<LionImage {...props} key={`D${i}${j}`} x={i} y={j}></LionImage>)
+    //     }
+    // }
+
+    return (
+      <React.Fragment>
+             {/* {lists} */}
+           {/* // <LionImage x={0} y={370} ></LionImage> */}
+           {this.state.ourAttack&&this.state.ourAttack()}
+      </React.Fragment>
+    )
+
+  }
 
   render() {    
    
@@ -143,10 +181,11 @@ class BattleMainPanel extends React.Component {
     const {enemyImg,enemyName,enemyCurrentHP,enemyTotalHP} = this.props
     const {ourImg,ourName,ourCurrentHP,ourTotalHP} = this.props
 
-  
+    
+
 
     return (
-      <div
+      <div onClick={ this.clickAddAttack }
         style={{    
           width: "100%",
           height: "100%",
@@ -192,7 +231,7 @@ class BattleMainPanel extends React.Component {
             />
           </Portal> */}
 
-        <GIF src={ourImg} 
+        <GIF src={ourImg}
           x={enemyPokePosition.x}
           y={enemyPokePosition.y}>
         </GIF>        
@@ -204,7 +243,8 @@ class BattleMainPanel extends React.Component {
         </Layer>
 
         <Layer >
-         <MyRect startX={ ourPokePosition.x } startY={ourPokePosition.y}/>
+         {/* <MyRect startX={ ourPokePosition.x } startY={ourPokePosition.y}/> */}
+            <this.OurAttack></this.OurAttack>
          </Layer>
       </Stage>
       </div>
