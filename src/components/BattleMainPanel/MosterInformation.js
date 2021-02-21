@@ -1,14 +1,61 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import {  Layer,Rect,Text } from "react-konva";
-
+import Konva from "konva";
 // gifler will be imported into global window object
+
+
+// Hook
+function usePrevious(value) {
+  // The ref object is a generic container whose current property is mutable ...
+  // ... and can hold any value, similar to an instance property on a class
+  const ref = useRef();
+  
+  // Store current value in ref
+  useEffect(() => {
+    ref.current = value;
+  }, [value]); // Only re-run if value changes
+  
+  // Return previous value (happens before update in useEffect above)
+  return ref.current;
+}
 
 
 const MosterInformation= (props) =>{
 
+  React.useEffect(() => {
+    // if (!blink) {
+    //   return;
+    // }
+    var period = 200;
+    var cnt = 0;
+    var anim = new Konva.Animation(frame => {
+
+      cnt ++;
+      console.log(frame.time)
+      if( cnt*2  > period )
+      {
+        anim.stop();
+        return;
+      }
+      rectRef.current.opacity((Math.sin(cnt/ period) + 1) / 2);
+      rectRef.current.width( 96 - 96*( cnt / period) );
+      textRef.current.text(cnt);
+    }, rectRef.current.getLayer());
+
+    anim.start();
+    return () => {
+      anim.stop();
+    };
+  }, [currentHP]);
+
+  
   const {x,y,monsterName,currentHP,totalHP} = props;
   const w = 200;
   const h = 100;
+  const rectRef = React.useRef();
+  const textRef = React.useRef();
+
+
   return(
     <Layer x={x} y ={y}>
          <Rect
@@ -26,6 +73,7 @@ const MosterInformation= (props) =>{
             fontSize= {20}
             fontFamily= "Calibri"
             fill= 'green'
+            ref={textRef}
           />
 
           <Rect
@@ -57,6 +105,7 @@ const MosterInformation= (props) =>{
             fill='blue'
             shadowBlur={1}
             cornerRadius= {15}
+            ref={rectRef}
             // strokeWidth={1} // border width
             // stroke="" // border color
           />
